@@ -11,7 +11,7 @@
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
 
-      <l-marker :lat-lng="[50, 50]" draggable @update:lat-lng="updateMarker" @moveend="log('moveend')">
+      <l-marker :lat-lng="[50, 50]" draggable @update:lat-lng="updateMarker" @moveend="getForecast">
         <l-popup>
           lol
         </l-popup>
@@ -24,9 +24,12 @@
     
     <h1>Spot Weather</h1>
 
-    <button @click="getForecast()">Get Forecast</button>
-
     <div>{{ location }}</div>
+    <ul id="example-1">
+      <li v-for="item in timeSeries" :key="item.time">
+        {{ item.time }}
+      </li>
+    </ul>
 
   </div>
 </template>
@@ -54,7 +57,8 @@ export default {
       center: [47.41322, -1.219482],
       lat: 47.41322, 
       lng: -1.219482,
-      location: ''
+      location: '',
+      timeSeries: []
     }
   },
   methods: {
@@ -69,6 +73,7 @@ export default {
       const forecast = await axios.get('https://api-metoffice.apiconnect.ibmcloud.com/metoffice/production/v0/forecasts/point/daily?excludeParameterMetadata=false&includeLocationName=true&latitude=' + this.lat + '&longitude=' + this.lng, config);
       console.log(forecast);
       this.location = forecast.data.features[0].properties.location.name
+      this.timeSeries = forecast.data.features[0].properties.timeSeries
     },
     log(a) {
       console.log(a);

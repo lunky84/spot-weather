@@ -25,7 +25,7 @@
 
     <ul id="example-1">
       <li v-for="item in filteredTImeSeries" :key="item.time">
-        {{ item.time }}
+        {{ formatDate(item.time) }}
         {{ item.dayMaxFeelsLikeTemp }}
       </li>
     </ul>
@@ -41,6 +41,8 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from 'axios';
+import dayjs from 'dayjs';
+
 export default {
   name: 'App',
     components: {
@@ -90,6 +92,9 @@ export default {
       this.lat = coords.lat;
       this.lng = coords.lng;
     },
+    formatDate(dateString) {
+      return dayjs(dateString).format('ddd');
+    }
   }
 }
 </script>

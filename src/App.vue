@@ -11,7 +11,7 @@
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
 
-      <l-marker :lat-lng="[50, 50]" draggable @update:lat-lng="updateMarker" @moveend="getForecast"></l-marker>
+      <l-marker :lat-lng="[lat, lng]" draggable @update:lat-lng="updateMarker" @ready="getForecast" @dragend="getForecast"></l-marker>
 
 
     </l-map>
@@ -21,9 +21,12 @@
     <h1>Spot Weather</h1>
 
     <div>{{ location }}</div>
+    <div>{{ coordinates[0] }}, {{ coordinates[1] }}</div>
+
     <ul id="example-1">
       <li v-for="item in filteredTImeSeries" :key="item.time">
         {{ item.time }}
+        {{ item.dayMaxFeelsLikeTemp }}
       </li>
     </ul>
 
@@ -48,10 +51,11 @@ export default {
   data() {
     return {
       zoom: 3,
-      center: [47.41322, -1.219482],
-      lat: 47.41322, 
-      lng: -1.219482,
+      center: [50.373061634625195, -4.130752086639405],
+      lat: 50.373061634625195, 
+      lng: -4.130752086639405,
       location: '',
+      coordinates: [50.3730, -4.1307],
       timeSeries: []
     }
   },
@@ -72,8 +76,9 @@ export default {
       }
       const forecast = await axios.get('https://api-metoffice.apiconnect.ibmcloud.com/metoffice/production/v0/forecasts/point/daily?excludeParameterMetadata=false&includeLocationName=true&latitude=' + this.lat + '&longitude=' + this.lng, config);
       console.log(forecast);
-      this.location = forecast.data.features[0].properties.location.name
-      this.timeSeries = forecast.data.features[0].properties.timeSeries
+      this.location = forecast.data.features[0].properties.location.name;
+      this.timeSeries = forecast.data.features[0].properties.timeSeries;
+      this.coordinates = forecast.data.features[0].geometry.coordinates;
     },
     log(a) {
       console.log(a);
@@ -102,8 +107,9 @@ export default {
   .data-panel {
     background-color: bisque;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 100px;
+    left: 100px;
     z-index: 2;
+    padding: 30px;
   }
 </style>

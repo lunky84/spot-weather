@@ -23,12 +23,10 @@
     <div>{{ location }}</div>
     <div>{{ coordinates[0] }}, {{ coordinates[1] }}</div>
 
-    <ul id="example-1">
-      <li v-for="item in filteredTImeSeries" :key="item.time">
-        {{ formatDate(item.time) }}
-        {{ item.dayMaxFeelsLikeTemp }}
-      </li>
-    </ul>
+    <div v-for="item in filteredTImeSeries" :key="item.time" class="summary">
+      <div class="day">{{ formatDate(item.time) }}</div>
+      <div class="temp">{{ item.dayMaxFeelsLikeTemp }}</div>
+    </div>
 
   </div>
 </template>
@@ -99,9 +97,12 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Proza+Libre');
+  
   body {
     margin: 0;
+    font-family: 'Proza Libre', sans-serif;
   }
   .map {
     height: 100vh;
@@ -110,11 +111,21 @@ export default {
     z-index: 0;
   }
   .data-panel {
-    background-color: bisque;
+    background-color: white;
     position: absolute;
     top: 100px;
     left: 100px;
     z-index: 2;
     padding: 30px;
+  }
+
+  .summary{
+    border-bottom: 1px solid #f3f3f3;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    &:last-child {
+      border: none;
+    }
   }
 </style>

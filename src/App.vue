@@ -1,5 +1,5 @@
 <template>
-<div style="height: 100vh; width: 100vw;">
+  <div class="map">
     <l-map
       v-model="zoom"
       v-model:zoom="zoom"
@@ -19,7 +19,7 @@
 
     </l-map>
   </div>
-  <div id="app">
+  <div class="data-panel">
     
     <h1>Spot Weather</h1>
 
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      zoom: 2,
+      zoom: 3,
       location: ''
     }
   },
@@ -74,5 +74,20 @@ export default {
 </script>
 
 <style>
-
+  body {
+    margin: 0;
+  }
+  .map {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 0;
+  }
+  .data-panel {
+    background-color: bisque;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
 </style>

@@ -11,11 +11,7 @@
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
 
-      <l-marker :lat-lng="[50, 50]" draggable @update:lat-lng="updateMarker" @moveend="getForecast">
-        <l-popup>
-          lol
-        </l-popup>
-      </l-marker>
+      <l-marker :lat-lng="[50, 50]" draggable @update:lat-lng="updateMarker" @moveend="getForecast"></l-marker>
 
 
     </l-map>
@@ -26,7 +22,7 @@
 
     <div>{{ location }}</div>
     <ul id="example-1">
-      <li v-for="item in timeSeries" :key="item.time">
+      <li v-for="item in filteredTImeSeries" :key="item.time">
         {{ item.time }}
       </li>
     </ul>
@@ -38,8 +34,7 @@
 import {
   LMap,
   LTileLayer,
-  LMarker,
-  LPopup,
+  LMarker
 } from "@vue-leaflet/vue-leaflet";
 import "leaflet/dist/leaflet.css";
 import axios from 'axios';
@@ -48,8 +43,7 @@ export default {
     components: {
     LMap,
     LTileLayer,
-    LMarker,
-    LPopup
+    LMarker
   },
   data() {
     return {
@@ -59,6 +53,12 @@ export default {
       lng: -1.219482,
       location: '',
       timeSeries: []
+    }
+  },
+  computed: {
+    filteredTImeSeries() {
+      // Remove the first entry as that is yesterday
+      return this.timeSeries.slice(1);  
     }
   },
   methods: {

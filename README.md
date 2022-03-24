@@ -1,5 +1,7 @@
 # spot-weather
 
+![Recipe search](preview.png)
+
 ## Project setup
 ```
 npm install

@@ -21,7 +21,7 @@
     <h1>Spot Weather</h1>
 
     <div>{{ location }}</div>
-    <div>{{ coordinates[0] }}, {{ coordinates[1] }}</div>
+    <div>{{ coordinates[0].toFixed(4) }}, {{ coordinates[1].toFixed(4) }}</div>
     <br>
     <div v-for="item in filteredTImeSeries" :key="item.time" class="summary">
       <div class="day">{{ formatDate(item.time) }}</div>
@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      zoom: 3,
+      zoom: 7,
       center: [50.373061634625195, -4.130752086639405],
       lat: 50.373061634625195, 
       lng: -4.130752086639405,

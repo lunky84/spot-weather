@@ -1,6 +1,6 @@
 # spot-weather
 
-![Recipe search](preview.png)
+![Spot weather screenshot](preview.jpg)
 
 ## Project setup
 ```

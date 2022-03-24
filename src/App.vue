@@ -22,10 +22,10 @@
 
     <div>{{ location }}</div>
     <div>{{ coordinates[0] }}, {{ coordinates[1] }}</div>
-
+    <br>
     <div v-for="item in filteredTImeSeries" :key="item.time" class="summary">
       <div class="day">{{ formatDate(item.time) }}</div>
-      <div class="temp">{{ item.dayMaxFeelsLikeTemp }}</div>
+      <div class="temp">{{ Math.round(item.dayMaxScreenTemperature) }}&deg;</div>
     </div>
 
   </div>

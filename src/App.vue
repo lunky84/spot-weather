@@ -8,7 +8,7 @@
       @update:center="updateCenter"
     >
       <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
       ></l-tile-layer>
 
       <l-marker :lat-lng="[lat, lng]" draggable @ready="getForecast" @dragend="updateMarker($event.target.getLatLng())"></l-marker>
@@ -18,14 +18,17 @@
   </div>
   <div class="data-panel">
     
-    <div>{{ location }}</div>
-    <div>{{ dateTime }}</div>
-    <div>{{ coordinates[0].toFixed(4) }}, {{ coordinates[1].toFixed(4) }}</div>
-    <br>
-    <div v-for="item in filteredTImeSeries" :key="item.time" class="summary">
-      <div class="day">{{ formatDate(item.time) }}</div>
-      <div class="rain">{{ item.dayProbabilityOfRain }}%</div>
-      <div class="temp">{{ Math.round(item.dayMaxScreenTemperature) }}&deg;</div>
+    <div class="overview">
+      <div class="location">{{ location }}</div>
+      <div>{{ dateTime }}</div>
+      <div>{{ coordinates[0].toFixed(4) }}, {{ coordinates[1].toFixed(4) }}</div>
+    </div>
+    <div class="outlook">
+      <div v-for="item in filteredTImeSeries" :key="item.time" class="summary">
+        <div class="day">{{ formatDate(item.time) }}</div>
+        <div class="rain">{{ item.dayProbabilityOfRain }}%</div>
+        <div class="temp">{{ Math.round(item.dayMaxScreenTemperature) }}&deg;</div>
+      </div>
     </div>
 
   </div>
@@ -50,7 +53,7 @@ export default {
   },
   data() {
     return {
-      zoom: 7,
+      zoom: 9,
       center: [50.373061634625195, -4.130752086639405],
       lat: 50.373061634625195, 
       lng: -4.130752086639405,
@@ -93,18 +96,18 @@ export default {
       this.getForecast();
     },
     formatDate(dateString) {
-      return dayjs(dateString).format('ddd');
+      return dayjs(dateString).format('dddd');
     }
   }
 }
 </script>
 
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css?family=Proza+Libre');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap');
   
   body {
     margin: 0;
-    font-family: 'Proza Libre', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   .map {
     height: 100vh;
@@ -118,16 +121,37 @@ export default {
     top: 100px;
     left: 100px;
     z-index: 2;
-    padding: 30px;
+    
+    border-radius: 15px;
+    font-size: 13px;
+    background: rgb(255,134,42);
+    background: linear-gradient(0deg, rgba(255,134,42,1) 0%, rgba(255,203,42,1) 100%);
+    color: white;
   }
 
-  .summary{
-    border-bottom: 1px solid #f3f3f3;
-    padding: 10px 0;
+  .overview {
+    padding: 24px 30px;
+    .location {
+      font-size: 20px;
+      margin: 0 0 15px 0;
+    }
+  }
+
+  .outlook {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 24px 30px;
+  }
+
+  .summary {
+    padding: 6px 0;
+    min-width: 220px;
     display: flex;
     justify-content: space-between;
     &:last-child {
       border: none;
+    }
+    .day {
+      flex: 0 0 90px;
     }
   }
 </style>

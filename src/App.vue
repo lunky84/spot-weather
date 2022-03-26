@@ -16,7 +16,7 @@
 
     </l-map>
   </div>
-  <div class="data-panel" :class="climate">
+  <div class="data-panel" :class="climate" v-if="filteredTImeSeries.length">
     
     <div class="overview">
       <div class="location">{{ location }}</div>
@@ -148,7 +148,7 @@ export default {
     }
     &.mild {
       background: rgb(129,168,29);
-      background: linear-gradient(0deg, rgba(129,168,29,1) 0%, rgba(180,224,63,1) 100%);
+      background: linear-gradient(0deg, rgba(129,168,29,1) 0%, rgba(167,207,62,1) 100%);
     }
     &.hot {
       background: rgb(255,134,42);

@@ -18,13 +18,13 @@
   </div>
   <div class="data-panel">
     
-    <h1>Spot Weather</h1>
-
     <div>{{ location }}</div>
+    <div>{{ dateTime }}</div>
     <div>{{ coordinates[0].toFixed(4) }}, {{ coordinates[1].toFixed(4) }}</div>
     <br>
     <div v-for="item in filteredTImeSeries" :key="item.time" class="summary">
       <div class="day">{{ formatDate(item.time) }}</div>
+      <div class="rain">{{ item.dayProbabilityOfRain }}%</div>
       <div class="temp">{{ Math.round(item.dayMaxScreenTemperature) }}&deg;</div>
     </div>
 
@@ -55,6 +55,7 @@ export default {
       lat: 50.373061634625195, 
       lng: -4.130752086639405,
       location: '',
+      dateTime: dayjs().format('ddd, D MMMM HH:mm'),
       coordinates: [50.3730, -4.1307],
       timeSeries: []
     }

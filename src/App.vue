@@ -89,7 +89,7 @@ export default {
     updateMarker(coords) {
       this.lat = coords.lat;
       this.lng = coords.lng;
-      this.getForecast;
+      this.getForecast();
     },
     formatDate(dateString) {
       return dayjs(dateString).format('ddd');

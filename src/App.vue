@@ -16,7 +16,7 @@
 
     </l-map>
   </div>
-  <div class="data-panel">
+  <div class="data-panel" :class="climate">
     
     <div class="overview">
       <div class="location">{{ location }}</div>
@@ -60,7 +60,8 @@ export default {
       location: '',
       dateTime: dayjs().format('ddd, D MMMM HH:mm'),
       coordinates: [50.3730, -4.1307],
-      timeSeries: []
+      timeSeries: [],
+      climate: ''
     }
   },
   computed: {
@@ -79,10 +80,11 @@ export default {
         }
       }
       const forecast = await axios.get('https://api-metoffice.apiconnect.ibmcloud.com/metoffice/production/v0/forecasts/point/daily?excludeParameterMetadata=false&includeLocationName=true&latitude=' + this.lat + '&longitude=' + this.lng, config);
-      console.log(forecast);
+      // console.log(forecast);
       this.location = forecast.data.features[0].properties.location.name;
       this.timeSeries = forecast.data.features[0].properties.timeSeries;
       this.coordinates = forecast.data.features[0].geometry.coordinates;
+      this.deriveClimate();
     },
     log(a) {
       console.log(a);
@@ -97,6 +99,20 @@ export default {
     },
     formatDate(dateString) {
       return dayjs(dateString).format('dddd');
+    },
+    deriveClimate() {
+      let temp = this.timeSeries[1].dayMaxScreenTemperature;
+      switch(true) {
+        case temp < 8:
+          this.climate = 'cold';
+          break;
+        case temp >= 8 && temp < 20:
+          this.climate = 'mild';
+          break;
+        case temp >= 20:
+          this.climate = 'hot';
+          break;
+      }      
     }
   }
 }
@@ -121,12 +137,24 @@ export default {
     top: 100px;
     left: 100px;
     z-index: 2;
-    
     border-radius: 15px;
     font-size: 13px;
-    background: rgb(255,134,42);
-    background: linear-gradient(0deg, rgba(255,134,42,1) 0%, rgba(255,203,42,1) 100%);
     color: white;
+    background: rgb(119,119,119);
+    background: linear-gradient(0deg, rgba(119,119,119,1) 0%, rgba(183,183,183,1) 50%);
+    &.cold {
+      background: rgb(63,94,251);
+      background: linear-gradient(0deg, rgba(63,94,251,1) 0%, rgba(98,196,255,1) 100%);
+    }
+    &.mild {
+      background: rgb(129,168,29);
+      background: linear-gradient(0deg, rgba(129,168,29,1) 0%, rgba(180,224,63,1) 100%);
+    }
+    &.hot {
+      background: rgb(255,134,42);
+      background: linear-gradient(0deg, rgba(255,134,42,1) 0%, rgba(255,203,42,1) 100%);
+    }
+    
   }
 
   .overview {

@@ -11,7 +11,7 @@
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ></l-tile-layer>
 
-      <l-marker :lat-lng="[lat, lng]" draggable @update:lat-lng="updateMarker" @ready="getForecast" @dragend="getForecast"></l-marker>
+      <l-marker :lat-lng="[lat, lng]" draggable @ready="getForecast" @dragend="getForecast($event.target.getLatLng())"></l-marker>
 
 
     </l-map>
@@ -66,7 +66,8 @@ export default {
     }
   },
   methods: {
-    async getForecast() {
+    async getForecast(latLng) {
+      this.updateMarker(latLng)
       let config = {
         headers: {
           'Accept': 'application/json',
@@ -89,6 +90,7 @@ export default {
     updateMarker(coords) {
       this.lat = coords.lat;
       this.lng = coords.lng;
+      console.log(coords);
     },
     formatDate(dateString) {
       return dayjs(dateString).format('ddd');

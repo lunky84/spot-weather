@@ -4,7 +4,7 @@
     
     <div class="overview">
       <div class="location">{{ location }}</div>
-      <div>{{ dateTime }}</div>
+      <div class="date-time">{{ dateTime }}</div>
       <div>{{ coordinates[0].toFixed(4) }}, {{ coordinates[1].toFixed(4) }}</div>
     </div>
     <div class="outlook">

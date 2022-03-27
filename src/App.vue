@@ -1,21 +1,5 @@
 <template>
-  <div class="map">
-    <l-map
-      v-model="zoom"
-      v-model:zoom="zoom"
-      :center="center"
-      @move="log('move')"
-      @update:center="updateCenter"
-    >
-      <l-tile-layer
-        url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-      ></l-tile-layer>
-
-      <l-marker :lat-lng="[lat, lng]" draggable @ready="getForecast" @dragend="updateMarker($event.target.getLatLng())"></l-marker>
-
-
-    </l-map>
-  </div>
+  <LeafletMap :lat="lat" :lng="lng" @onReady="getForecast" @markerChange="updateMarker" />
   <div class="data-panel" :class="climate" v-if="filteredTImeSeries.length">
     
     <div class="overview">
@@ -35,26 +19,17 @@
 </template>
 
 <script>
-import {
-  LMap,
-  LTileLayer,
-  LMarker
-} from "@vue-leaflet/vue-leaflet";
-import "leaflet/dist/leaflet.css";
+import LeafletMap from "./components/LeafletMap.vue";
 import axios from 'axios';
 import dayjs from 'dayjs';
 
 export default {
   name: 'App',
-    components: {
-    LMap,
-    LTileLayer,
-    LMarker
+  components: {
+      LeafletMap,
   },
   data() {
     return {
-      zoom: 9,
-      center: [50.373061634625195, -4.130752086639405],
       lat: 50.373061634625195, 
       lng: -4.130752086639405,
       location: '',
@@ -85,12 +60,6 @@ export default {
       this.timeSeries = forecast.data.features[0].properties.timeSeries;
       this.coordinates = forecast.data.features[0].geometry.coordinates;
       this.deriveClimate();
-    },
-    log(a) {
-      console.log(a);
-    },
-    updateCenter(coords) {
-      this.center = coords
     },
     updateMarker(coords) {
       this.lat = coords.lat;

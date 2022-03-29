@@ -2,6 +2,28 @@
 
 ![Spot weather screenshot](preview.jpg)
 
+To use the map tile used in this project you will need to create a free account with stadiamaps.com and add the required domain name.
+Or you can specify a different set of tiles in the LeafletMap.vue component
+
+## Setting up the API keys
+
+Go to the UK MetOffice Weather datahub website...
+https://metoffice.apiconnect.ibmcloud.com/metoffice/production/
+
+* Register an account
+* Create an app
+* Obtain the API ID and Secret
+* Subscirbe to a plan (free plans are availible)
+
+Add the ID and Secret to the terminal command below and then run it from the root directory of the project.
+
+It will create a apikey.js file
+
+```
+echo -e "const X_IBM_CLIENT_ID ='';\nconst X_IBM_CLIENT_SECRET = '';\n\nexport { X_IBM_CLIENT_ID, X_IBM_CLIENT_SECRET };" > apikey.js
+```
+
+
 ## Project setup
 ```
 npm install

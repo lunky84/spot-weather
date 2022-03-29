@@ -2,7 +2,7 @@
 
 ![Spot weather screenshot](preview.jpg)
 
-To use the map tile used in this project you will need to create a free account with stadiamaps.com and add the required domain name.
+To use the map tiles used in this project you will need to create a free account with stadiamaps.com and add the required domain name.
 Or you can specify a different set of tiles in the LeafletMap.vue component
 
 ## Setting up the API keys

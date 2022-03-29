@@ -13,7 +13,7 @@ https://metoffice.apiconnect.ibmcloud.com/metoffice/production/
 * Register an account
 * Create an app
 * Obtain the API ID and Secret
-* Subscirbe to a plan (free plans are availible)
+* Subscribe to a plan (free plans are available)
 
 Add the ID and Secret to the terminal command below and then run it from the root directory of the project.
 
